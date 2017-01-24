@@ -6,20 +6,16 @@ body {
   margin: 0;
 }
 
+#gameArea {
+  
+}
+
 canvas {
   background-color: green;
+  height: 50vw;
 }
 
-@media (orientation:landscape) {
-  canvas {
-    width: 100vh;
-    height: 100vh;
-  }
-}
-
-@media screen and (orientation:portrait) {
-  canvas {
-    width: 100vw;
-    height: 100vw;
-  }
+#gameInformation {
+  height: 6.25vw;
+  background-color: red;
 }

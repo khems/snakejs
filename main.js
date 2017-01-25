@@ -4,37 +4,66 @@ document.addEventListener('DOMContentLoaded', function(){
   //returns a 2d drawing context on the canvas
   var ctx = canvas.getContext('2d')
   
-  setInterval(function(){drawSnakeParts(ctx, snake)}, 1000)
-  
+  movementLockOff = true;
   //snake
   var snake = new snakePart(ctx, 10, 10)
+  
+  var directionArray = ["right"]
+  var snakePartArray = []
+  
+  snakePartArray.push(snake)
+  
+  setInterval(function(){
+    drawSnakeParts(ctx, snakePartArray)
+    movementLockOff = true
+  }, 1000)
 
   //event listener for arrow keys
   document.addEventListener('keydown', function(e) {
+    if(movementLockOff){
       var key = e.keyCode
       console.log(key)
-      moveSnakePart(key, snake)
-    //  drawSnakeParts(ctx, snake)
+      handleDirectionPresses(key, snake)
+      movementLockOff = false;
+    }
+    //drawSnakeParts(ctx, snake)
   })
 })
 
-function moveSnakePart(direction, snakePart){
+function handleDirectionPresses(direction, directionArray){
   switch (direction){
     case 37: 
-      snakePart.xpos -= 10
+      directionArray.push('left')
       console.log('left')
       break
     case 38: 
-      snakePart.ypos -= 10
+      directionArray.push('up')
       console.log('up')
       break
     case 39: 
-      snakePart.xpos += 10
+      directionArray.push('right')
       console.log('right')
       break
     case 40: 
-      snakePart.ypos += 10
+      directionArray.push('down')
       console.log('down')
+      break
+  }
+}
+
+function moveSnake(snake, directonArray){
+  switch(directionArray[0]){
+    case 'left':
+      snake[0].xpos -= 10
+      break
+    case 'up':
+      snake[0].ypos -= 10
+      break
+    case 'right':
+      snake[0].xpos += 10
+      break
+    case 'down':
+      snake[0].ypos += 10
       break
   }
 }

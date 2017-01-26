@@ -7,12 +7,13 @@ body {
 }
 
 #gameArea {
-  
+
 }
 
 canvas {
   background-color: green;
   height: 50vw;
+  display: block;
 }
 
 #gameInformation {

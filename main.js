@@ -4,76 +4,40 @@ document.addEventListener('DOMContentLoaded', function(){
   //returns a 2d drawing context on the canvas
   var ctx = canvas.getContext('2d')
   
-  movementLockOff = true;
-  //snake
-  var snake = new snakePart(ctx, 10, 10)
-  
-  var directionArray = ["right"]
-  var snakePartArray = []
-  
-  snakePartArray.push(snake)
-  
-  setInterval(function(){
-    drawSnakeParts(ctx, snakePartArray)
-    movementLockOff = true
-  }, 1000)
+  var player = new dot(ctx, 10, 10)
 
   //event listener for arrow keys
   document.addEventListener('keydown', function(e) {
-    if(movementLockOff){
-      var key = e.keyCode
-      console.log(key)
-      handleDirectionPresses(key, snake)
-      movementLockOff = false;
-    }
-    //drawSnakeParts(ctx, snake)
+    var key = e.keyCode
+    console.log(key)
+    moveDot(player, key)
+    drawDot(ctx, player)
   })
 })
 
-function handleDirectionPresses(direction, directionArray){
-  switch (direction){
-    case 37: 
-      directionArray.push('left')
-      console.log('left')
+function moveDot(dot, direction){
+  switch(direction){
+    case 37:
+      dot.xpos -= 10
       break
-    case 38: 
-      directionArray.push('up')
-      console.log('up')
+    case 38:
+      dot.ypos -= 10
       break
-    case 39: 
-      directionArray.push('right')
-      console.log('right')
+    case 39:
+      dot.xpos += 10
       break
-    case 40: 
-      directionArray.push('down')
-      console.log('down')
+    case 40:
+      dot.ypos += 10
       break
   }
 }
 
-function moveSnake(snake, directonArray){
-  switch(directionArray[0]){
-    case 'left':
-      snake[0].xpos -= 10
-      break
-    case 'up':
-      snake[0].ypos -= 10
-      break
-    case 'right':
-      snake[0].xpos += 10
-      break
-    case 'down':
-      snake[0].ypos += 10
-      break
-  }
-}
-
-function drawSnakeParts(ctx, snakeparts){
+function drawDot(ctx, player){
   ctx.clearRect(0,0,300,150)
-  ctx.fillRect(snakeparts.xpos, snakeparts.ypos, 10, 10)
+  ctx.fillRect(player.xpos, player.ypos, 10, 10)
 }
 
-function snakePart(ctx, xpos, ypos){
+function dot(ctx, xpos, ypos){
   this.xpos = xpos
   this.ypos = ypos
 }

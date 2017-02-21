@@ -11,12 +11,12 @@ body {
 }
 
 canvas {
-  background-color: green;
+  background-color: lightgray;
   height: 50vw;
   display: block;
 }
 
 #gameInformation {
   height: 6.25vw;
-  background-color: red;
+  background-color: darkgray;
 }

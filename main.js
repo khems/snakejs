@@ -53,6 +53,7 @@ function checkWrapping(dot){
 }
 
 function drawDot(ctx, dot){
+  ctx.fillStyle = 'black';
   ctx.fillRect(dot.xpos, dot.ypos, 10, 10)
 }
 
@@ -64,5 +65,6 @@ function dot(ctx, xpos, ypos){
 function makeCoin(ctx){
   xpos = Math.floor((Math.random() * 30) + 1) * 10
   ypos = Math.floor((Math.random() * 15) + 1) * 10
+  ctx.fillStyle = 'yellow';
   ctx.fillRect(xpos, ypos, 10, 10)
 }

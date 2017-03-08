@@ -1,40 +1,47 @@
 document.addEventListener('DOMContentLoaded', function(){
   var canvas = document.getElementsByTagName('canvas')[0]
 
-  //returns a 2d drawing context on the canvas
+  // Returns a 2D drawing context on the canvas
   var ctx = canvas.getContext('2d')
   
-  var player = new dot(ctx, 10, 10)
+  var player = new dot(10, 10)
   
   makeCoin(ctx)
 
-  //event listener for arrow keys
+  // Event listener for arrow keys
   document.addEventListener('keydown', function(e) {
     var key = e.keyCode
     console.log(key)
-    moveDot(ctx, player, key)
-    //ctx.clearRect(0,0,300,150)
+    ctx.clearRect(player.xpos, player.ypos, 10, 10)
+    player = moveDot(ctx, player, key)
     drawDot(ctx, player)
   })
 })
 
-function moveDot(ctx, dot, direction){
-  ctx.clearRect(dot.xpos, dot.ypos, 10, 10)
+//Returns dot (with direction parameters)
+function getSquareAtDirection(ctx, oldDot, direction){
+  var newDot = new dot(oldDot.xpos, oldDot.ypos)
   switch(direction){
     case 37:
-      dot.xpos -= 10
+      newDot.xpos -= 10
       break
     case 38:
-      dot.ypos -= 10
+      newDot.ypos -= 10
       break
     case 39:
-      dot.xpos += 10
+      newDot.xpos += 10
       break
     case 40:
-      dot.ypos += 10
+      newDot.ypos += 10
       break
   }
-  checkWrapping(dot)
+  checkWrapping(newDot)
+  return newDot
+}
+
+function moveDot(ctx, oldDot, direction){
+  newDot = getSquareAtDirection(ctx, oldDot, direction)
+  return newDot
 }
 
 function checkWrapping(dot){
@@ -57,7 +64,7 @@ function drawDot(ctx, dot){
   ctx.fillRect(dot.xpos, dot.ypos, 10, 10)
 }
 
-function dot(ctx, xpos, ypos){
+function dot(xpos, ypos){
   this.xpos = xpos
   this.ypos = ypos
 }

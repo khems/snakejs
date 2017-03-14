@@ -20,3 +20,9 @@ canvas {
   height: 6.25vw;
   background-color: darkgray;
 }
+
+#score {
+  text-align: center;
+  font-size: 5vw;
+  font-family: monospace;
+}

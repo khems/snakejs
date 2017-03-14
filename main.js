@@ -1,22 +1,23 @@
 document.addEventListener('DOMContentLoaded', function(){
   var canvas = document.getElementsByTagName('canvas')[0]
-
   // Returns a 2D drawing context on the canvas
   var ctx = canvas.getContext('2d')
   
   var player = new dot(10, 10)
-  
   makeCoin(ctx)
+  
+  playerScore = 0
 
   // Event listener for arrow keys
   document.addEventListener('keydown', function(e) {
     var key = e.keyCode
-    console.log(key)
     ctx.clearRect(player.xpos, player.ypos, 10, 10)
     player = moveDot(ctx, player, key)
     drawDot(ctx, player)
   })
 })
+
+var playerScore
 
 //Returns dot (with direction parameters)
 function getSquareAtDirection(ctx, oldDot, direction){
@@ -39,8 +40,20 @@ function getSquareAtDirection(ctx, oldDot, direction){
   return newDot
 }
 
+function checkForAndGetCoin(ctx, dot){
+  imageData = ctx.getImageData(dot.xpos, dot.ypos, 10, 10).data
+  var color = [imageData[0], imageData[1], imageData[2]];
+  if(color.toString() == [255, 255, 0].toString()){ //hack
+    playerScore++
+    makeCoin(ctx)
+  }
+  
+  document.getElementById('score').innerHTML = parseInt(playerScore)
+}
+
 function moveDot(ctx, oldDot, direction){
   newDot = getSquareAtDirection(ctx, oldDot, direction)
+  checkForAndGetCoin(ctx, newDot)
   return newDot
 }
 
@@ -70,8 +83,8 @@ function dot(xpos, ypos){
 }
 
 function makeCoin(ctx){
-  xpos = Math.floor((Math.random() * 30) + 1) * 10
-  ypos = Math.floor((Math.random() * 15) + 1) * 10
+  xpos = Math.floor(Math.random() * 30) * 10
+  ypos = Math.floor(Math.random() * 15) * 10
   ctx.fillStyle = 'yellow';
   ctx.fillRect(xpos, ypos, 10, 10)
 }
